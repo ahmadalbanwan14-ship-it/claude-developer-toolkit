@@ -18,6 +18,7 @@ A small, practical open-source toolkit for developers building with the Claude A
 
 - Python 3.10+
 - An Anthropic API key
+- A Claude model ID available to your Anthropic account
 
 ## Install
 
@@ -28,15 +29,19 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
-Set your API key:
+Set your environment variables:
 
 ```bash
 # macOS/Linux
 export ANTHROPIC_API_KEY="your-key"
+export ANTHROPIC_MODEL="your-model-id"
 
 # PowerShell
 $env:ANTHROPIC_API_KEY="your-key"
+$env:ANTHROPIC_MODEL="your-model-id"
 ```
+
+Keeping the model configurable avoids hard-coding a model name that may later become outdated.
 
 ## Examples
 
@@ -44,6 +49,18 @@ $env:ANTHROPIC_API_KEY="your-key"
 python examples/basic_chat.py
 python examples/structured_json.py
 python examples/tool_use.py
+```
+
+The tool-use example intentionally uses a tiny local demo function so it can show the tool-call pattern without depending on another web service.
+
+## Retry helper
+
+```python
+from claude_toolkit import retry
+
+@retry(max_attempts=4, base_delay=0.5)
+def do_work():
+    ...
 ```
 
 ## Run tests
