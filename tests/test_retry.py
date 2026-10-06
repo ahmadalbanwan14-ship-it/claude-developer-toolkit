@@ -1,6 +1,8 @@
+import importlib
+
 import pytest
 
-import claude_toolkit.retry as retry_module
+retry_module = importlib.import_module("claude_toolkit.retry")
 from claude_toolkit.retry import retry
 
 
